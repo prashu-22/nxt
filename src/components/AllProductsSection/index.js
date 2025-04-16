@@ -365,18 +365,20 @@ const AllProductsSection = () => {
             ) : (
               sortedProducts.map(product => (
                 <div key={product.id} className="product-card">
-                  <img src={product.image} alt={product.title} />
-                  <h4>{product.title.substring(0, 25)}...</h4>
-                  <div className="spae">
-                  <p>${product.price}</p>
-                  <button
-                    className={`wishlist ${isInWishlist(product.id) ? 'added' : ''}`}
-                    onClick={() => handleAddToWishlist(product)}
-                  >
-                    ♡
-                  </button>
-                  </div>
-                </div>
+                  
+                <img src={product.image} alt={product.title} />
+                <button
+                  className={`wishlist ${
+                    isInWishlist(product.id) ? 'added' : ''
+                  }`}
+                  onClick={() => handleAddToWishlist(product)}
+                >
+                  ♡
+                </button>
+                <h4>{product.title.substring(0, 25)}...</h4>
+                <p>${product.price}</p>
+               
+              </div>
               ))
             )}
           </div>
