@@ -4,7 +4,7 @@ import React from 'react';
 import LoginForm from './components/LoginForm'
 import Signup from './components/Signup'
 import Home from './components/Home'
-import Footer from './components/Footer'
+import Footers from './components/Footers'
 import Products from './components/Products'
 import ProductItemDetails from './components/ProductItemDetails'
 import Cart from './components/Cart'
@@ -26,7 +26,7 @@ const App = () => (
       <Route path="/products" element={<Products />} />
       <Route path="/cart" element={<Cart />} />
       <Route path="/wishlist" element={<WishlistPage />} />
-      <Route path="/about" element={<Footer />} />
+      <Route path="/about" element={<Footers />} />
       <Route path="/profile" element={<Profile />} />
     </Route>
 

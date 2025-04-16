@@ -1,11 +1,9 @@
 import React from 'react'
 
-import Header from '../Header'
 import './index.css'
 
 const Footer = () => (
   <>
-    <Header />
     <footer className="footer">
       <div className="footer-top">
         <div className="subscribe-section">
