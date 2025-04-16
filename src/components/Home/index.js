@@ -46,6 +46,8 @@
 // }
 
 // export default Home
+import React from 'react';
+
 import Cookies from 'js-cookie'
 import {Navigate, Link} from 'react-router-dom'
 

@@ -1,4 +1,5 @@
 import AllProductsSection from '../AllProductsSection'
+import React from 'react';
 
 import Header from '../Header'
 import PrimeDealsSection from '../PrimeDealsSection'

@@ -1,4 +1,5 @@
 import {useState} from 'react'
+import React from 'react';
 import Cookies from 'js-cookie'
 import {Navigate, useNavigate} from 'react-router-dom'
 import './index.css'
@@ -12,6 +13,7 @@ const LoginForm = () => {
 
   const onSubmitSuccess = jwtToken => {
     Cookies.set('jwt_token', jwtToken, {expires: 30})
+    localStorage.setItem('username', name) // ✅ Store the username
     navigate('/', {replace: true})
   }
 
