@@ -234,8 +234,12 @@ const AllProductsSection = () => {
     });
   };
 
-  const handleAddToWishlist = product => addToWishlist(product);
-
+  const handleAddToWishlist = (product) => {
+    if (!isInWishlist(product.id)) {
+      addToWishlist(product);
+    }
+  };
+  
   const isInWishlist = productId =>
     wishlist.some(item => item.id === productId);
 

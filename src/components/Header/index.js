@@ -106,8 +106,7 @@
 
 // export default Header
 
-import React from 'react'
-
+import React, { useState, useEffect } from 'react'
 import {
   FaSearch,
   FaHeart,
@@ -116,21 +115,34 @@ import {
   FaBars,
   FaTimes,
 } from 'react-icons/fa'
-import {Link, useNavigate, useLocation} from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import Cookies from 'js-cookie'
-import {useWishlist} from '../../context/WishlistContext'
+import { useWishlist } from '../../context/WishlistContext'
 import './index.css'
 
 function Header() {
-  const [menuOpen, setMenuOpen] = React.useState(false)
-  const [showSearch, setShowSearch] = React.useState(false)
-  const [searchTerm, setSearchTerm] = React.useState('')
+  const [menuOpen, setMenuOpen] = useState(false)
+  const [showSearch, setShowSearch] = useState(false)
+  const [searchTerm, setSearchTerm] = useState('')
+  const [isMobile, setIsMobile] = useState(false) // To track mobile screen size
   const navigate = useNavigate()
   const location = useLocation()
-  const {wishlist} = useWishlist()
+  const { wishlist } = useWishlist()
+
+  // Update screen size (Mobile or Desktop)
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768) // Consider screen <= 768px as mobile
+    }
+
+    window.addEventListener('resize', handleResize)
+    handleResize() // Call once to set initial state
+
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
 
   // Update URL whenever searchTerm changes
-  React.useEffect(() => {
+  useEffect(() => {
     const timer = setTimeout(() => {
       const trimmedSearch = searchTerm.trim()
       const currentPath = location.pathname
@@ -143,7 +155,7 @@ function Header() {
   }, [searchTerm, navigate, location.pathname])
 
   // Sync searchTerm with current URL (when revisiting /products?search=something)
-  React.useEffect(() => {
+  useEffect(() => {
     const params = new URLSearchParams(location.search)
     const search = params.get('search') || ''
     setSearchTerm(search)
@@ -178,10 +190,21 @@ function Header() {
         </button>
 
         <nav className={`nav-links ${menuOpen ? 'open' : ''}`}>
-          <Link to="/products" onClick={() => setMenuOpen(false)}>SHOP</Link>
-          <Link to="/cart" onClick={() => setMenuOpen(false)}>CART</Link>
-          <Link to="/about" onClick={() => setMenuOpen(false)}>ABOUT</Link>
-          <button className="logout-btn mobile-only" onClick={handleLogout}>Logout</button>
+          <Link to="/products" onClick={() => setMenuOpen(false)}>
+            SHOP
+          </Link>
+          <Link to="/cart" onClick={() => setMenuOpen(false)}>
+            CART
+          </Link>
+          <Link to="/about" onClick={() => setMenuOpen(false)}>
+            ABOUT
+          </Link>
+          {/* Conditionally render logout button for mobile */}
+          {isMobile && (
+            <button className="logout-btn mobile-only" onClick={handleLogout}>
+              Logout
+            </button>
+          )}
         </nav>
 
         <div className="icon-section">
@@ -200,12 +223,26 @@ function Header() {
 
           <Link to="/wishlist">
             <FaHeart className="icon" />
-            {wishlist.length > 0 && <span className="wishlist-count">{wishlist.length}</span>}
+            {wishlist.length > 0 && (
+              <span className="wishlist-count">{wishlist.length}</span>
+            )}
           </Link>
-         <Link to="/cart"><FaShoppingBag className="icon" /></Link>
-          <Link to="/profile"><FaUser className="icon" /></Link>
-          <div className="language">ENG <span className="arrow">⌄</span></div>
-          <button className="logout-btn desktop-only" onClick={handleLogout}>Logout</button>
+          <Link to="/cart">
+            <FaShoppingBag className="icon" />
+          </Link>
+          <Link to="/profile">
+            <FaUser className="icon" />
+          </Link>
+          <div className="language">
+            ENG <span className="arrow">⌄</span>
+          </div>
+
+          {/* Conditionally render logout button for desktop */}
+          {!isMobile && (
+            <button className="logout-btn desktop-only" onClick={handleLogout}>
+              Logout
+            </button>
+          )}
         </div>
       </div>
     </header>

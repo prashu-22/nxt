@@ -150,3 +150,8 @@
     align-items: flex-start;
   }
 }
+@media (min-width: 769px) {
+  .icon-section .logout-btn.desktop-only {
+    margin-top: 20px;
+  }
+}
